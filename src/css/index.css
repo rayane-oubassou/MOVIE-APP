@@ -1,26 +1,48 @@
+/* --- Global Variables and Base Setup --- */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Colors */
+  --color-primary: #e50914; /* Netflix Red */
+  --color-primary-dark: #b80710;
+  --color-primary-light: #ff333d;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --color-background-dark: #0a0a0a; /* Deeper dark background */
+  --color-background-light: #141414; /* Slightly lighter dark for components */
+  --color-background-card: #1a1a1a; /* Even lighter dark for cards */
+
+  --color-text-light: rgba(255, 255, 255, 0.95); /* Bright text on dark */
+  --color-text-medium: rgba(255, 255, 255, 0.7); /* Slightly dimmer text */
+  --color-text-dark: rgba(255, 255, 255, 0.4); /* Placeholder/辅助信息 */
+
+  --color-border-dark: #333;
+  --color-border-light: #444;
+
+  /* Typography */
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Prioritize Inter, then common sans-serif */
+  line-height: 1.6; /* Slightly increased line height for readability */
+  font-weight: 400;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%; /* Prevents text scaling on orientation change */
+
+  /* Global Transitions */
+  transition: background-color 0.4s ease, color 0.4s ease; /* Smooth theme transitions */
 }
 
-* {
+/* --- Universal Box Sizing --- */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  overflow-x: hidden;
+/* --- HTML & Body Base Styles --- */
+html {
+  scroll-behavior: smooth; /* Smooth scrolling for anchor links */
 }
 
 body {
@@ -28,57 +50,177 @@ body {
   width: 100%;
   min-height: 100vh;
   position: relative;
+  background-color: var(--color-background-dark);
+  color: var(--color-text-light);
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
+/* --- Root Element Styles (React/Vue App Mount Point) --- */
 #root {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* Ensures content expands to fill available space */
 }
 
+/* --- Global Link Styles --- */
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: var(--color-primary); /* Use primary red for links */
+  text-decoration: none; /* No underline by default */
+  transition: color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
+
 a:hover {
-  color: #535bf2;
+  color: var(--color-primary-light); /* Lighter red on hover */
+  transform: translateY(-1px); /* Subtle lift effect */
+  text-decoration: underline; /* Underline on hover for better UX */
+  text-underline-offset: 3px; /* Space out the underline */
+}
+
+a:active {
+  color: var(--color-primary-dark); /* Darker red on click */
+}
+
+/* --- Heading Styles --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Netflix Sans', 'Inter', sans-serif; /* Prioritize Netflix Sans if loaded, then Inter */
+  color: var(--color-text-light);
+  margin-bottom: 0.5em; /* Default bottom margin for headings */
+  line-height: 1.2;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 3.5em; /* Larger, more impactful H1 */
+  letter-spacing: -0.02em; /* Tighter letter spacing */
 }
 
+h2 {
+  font-size: 2.5em;
+  margin-bottom: 0.8em;
+}
+
+h3 {
+  font-size: 1.8em;
+  margin-bottom: 0.7em;
+}
+
+p {
+  color: var(--color-text-medium);
+  line-height: 1.7;
+  margin-bottom: 1em; /* Default margin for paragraphs */
+}
+
+/* --- Global Button Styles --- */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  padding: 0.8em 1.5em; /* More generous padding */
+  font-size: 1.05em; /* Slightly larger font */
+  font-weight: 600; /* Bolder font weight */
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-background-card); /* Use a defined dark background */
+  color: var(--color-text-light);
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle initial shadow */
 }
 
-@media (prefers-color-scheme: light) {
+button:hover {
+  background-color: #2a2a2a; /* Lighter background on hover */
+  border-color: var(--color-border-light); /* More subtle border change */
+  transform: translateY(-1px); /* Slight lift */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+}
+
+button:focus,
+button:focus-visible {
+  outline: none; /* Remove default outline */
+  border-color: var(--color-primary); /* Netflix red focus indicator */
+  box-shadow: 0 0 0 4px rgba(229, 9, 20, 0.4); /* Stronger glow for accessibility */
+}
+
+button:active {
+  transform: translateY(0); /* Press effect */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Smaller shadow when pressed */
+}
+
+/* --- Media Queries for Responsive Design --- */
+@media (max-width: 768px) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    font-size: 90%; /* Slightly smaller base font for better mobile fit */
   }
-  a:hover {
+
+  h1 {
+    font-size: 2.5em;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  h3 {
+    font-size: 1.4em;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 85%; /* Even smaller base font for very small screens */
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  button {
+    padding: 0.7em 1.2em;
+    font-size: 0.95em;
+  }
+}
+
+/* --- Light Mode (Optional, if you plan to support it) --- */
+@media (prefers-color-scheme: light) {
+  body.light-theme { /* Add a class to body for explicit light mode control */
+    background-color: #ffffff;
+    color: #213547;
+  }
+
+  body.light-theme :root {
+    --color-background-dark: #ffffff;
+    --color-background-light: #f5f5f5;
+    --color-background-card: #eeeeee;
+
+    --color-text-light: #213547;
+    --color-text-medium: #555;
+    --color-text-dark: #888;
+
+    --color-border-dark: #ccc;
+    --color-border-light: #bbb;
+  }
+
+  body.light-theme a {
+    color: #4a69bd; /* Blue for links in light mode */
+  }
+  body.light-theme a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
+
+  body.light-theme button {
+    background-color: #f0f0f0;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  body.light-theme button:hover {
+    background-color: #e0e0e0;
+    border-color: #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  body.light-theme button:focus-visible {
+    border-color: #4a69bd;
+    box-shadow: 0 0 0 4px rgba(74, 105, 189, 0.4);
   }
 }
